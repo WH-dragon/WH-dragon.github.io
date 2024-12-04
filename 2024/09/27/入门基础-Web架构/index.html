@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>网安入门-Web架构 | WH-dragon的荒岛</title><meta name="author" content="WH-dragon"><meta name="copyright" content="WH-dragon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Web架构的相关知识以及对渗透测试影响的思考（个人学习笔记）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网安入门-Web架构">
+<meta property="og:url" content="http://wh-dragon.github.io/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-Web%E6%9E%B6%E6%9E%84/index.html">
+<meta property="og:site_name" content="WH-dragon的荒岛">
+<meta property="og:description" content="Web架构的相关知识以及对渗透测试影响的思考（个人学习笔记）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wh-dragon.github.io/img/%E5%A4%B4%E5%83%8F.png">
+<meta property="article:published_time" content="2024-09-27T03:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-27T02:38:18.341Z">
+<meta property="article:author" content="WH-dragon">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wh-dragon.github.io/img/%E5%A4%B4%E5%83%8F.png"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="http://wh-dragon.github.io/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-Web%E6%9E%B6%E6%9E%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '网安入门-Web架构',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-27 10:38:18'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%A4%B4%E5%83%8F.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/img/%E5%A4%B4%E9%83%A8%E5%9B%BE.png')"><nav id="nav"><span id="blog-info"><a href="/" title="WH-dragon的荒岛"><span class="site-name">WH-dragon的荒岛</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">网安入门-Web架构</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-27T03:00:00.000Z" title="发表于 2024-09-27 11:00:00">2024-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-27T02:38:18.341Z" title="更新于 2024-09-27 10:38:18">2024-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E5%AE%89/">网安</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="Web架构"><a href="#Web架构" class="headerlink" title="Web架构"></a>Web架构</h3><h4 id="网站常见搭建模式"><a href="#网站常见搭建模式" class="headerlink" title="网站常见搭建模式"></a>网站常见搭建模式</h4><p>常规的Web应用搭建步骤：</p>
+<p>1、购买云服务器，购买域名</p>
+<p>2、云服务器去搭建中间件</p>
+<p>3、下载并上传Web程序源码</p>
+<p>4、添加网站并绑定域名目录</p>
+<p>子域名模式：</p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a> &#x2F;&#x2F;zblog asp程序</p>
+<p>example.example.com &#x2F;&#x2F;wordpress php程序</p>
+<p>bbs.example.com &#x2F;&#x2F;论坛 dz程序 BBS :社区论坛 dz :Discuz!软件搭建的论坛</p>
+<p>oa.example.com &#x2F;&#x2F;OA 通达OA OA（Office Automation）办公自动化</p>
+<p>端口模式：</p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a> &#x2F;&#x2F;zblog asp程序</p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com:8080/">www.example.com:8080</a> &#x2F;&#x2F;wordpress php程序</p>
+<p>相当于两个目标 程序是我们攻击的目标</p>
+<p>目录模式：</p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a> &#x2F;&#x2F;zblog asp程序</p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com/bbs">www.example.com/bbs</a> &#x2F;&#x2F;论坛 dz程序</p>
+<p>Docker模式：</p>
+<p>Docker容器技术来部署、管理和扩展网站，安全性高</p>
+<p>容器化（Containerization）：将应用程序及其依赖环境打包在一起，形成一个可移植的容器</p>
+<p>镜像（Image）：容器的静态模板，用于创建容器</p>
+<p>容器（Container）：镜像的运行实例</p>
+<p>分配给用户使用</p>
+<h4 id="Web程序源码分类与结构："><a href="#Web程序源码分类与结构：" class="headerlink" title="Web程序源码分类与结构："></a>Web程序源码分类与结构：</h4><p>开源：</p>
+<p>源码可见 </p>
+<p>源码不可见  加密（加密工具）或语言特性决定（JAVA）</p>
+<p>商业(闭源)：网校系统 开源的功能不行 花钱开发</p>
+<p>自写：大型企业 政要单位</p>
+<p>对目标判断拿到源码的代价及可能性</p>
+<p>目录结构Admin database bin </p>
+<h4 id="对中间件的配置："><a href="#对中间件的配置：" class="headerlink" title="对中间件的配置："></a>对中间件的配置：</h4><p>攻击者角度：植入后门（木马）–连接控制网站</p>
+<p>管理员对中间件的设置阻止你：</p>
+<p>1，设置目录的属性-安全，权限拒绝后，此手段失效，但是一般只能锁一些图片目录（锁了还能正常读取），不然网站都打不开</p>
+<p>2，目录-身份验证-禁用匿名身份验证-启用Windows身份验证，访问网站需要账号密码才能访问</p>
+<h4 id="站库分离"><a href="#站库分离" class="headerlink" title="站库分离"></a>站库分离</h4><p>Access MSSQL 前者不用账号密码本地建库，后者要，可以站库分离 </p>
+<p>源码里有数据库配置相关的信息</p>
+<p>数据库与源码分离，两台服务器</p>
+<p>以前建数据库还要自己有个操作系统，现在有云数据库</p>
+<p>现在你拿下了这个网站，数据库在本地也能拿到，数据库在另一台服务器不一定能拿到，数据库在云，几乎不可能</p>
+<p>以前上传木马，拿到网站，现在云对象存储OSS，上传了没有卵用</p>
+<h4 id="常规访问和路由访问"><a href="#常规访问和路由访问" class="headerlink" title="常规访问和路由访问"></a>常规访问和路由访问</h4><p>常规访问：URL和文件目录对应</p>
+<p>路由访问：URL和文件目录对不上，mvc源码 JAVA Python，要根据路由配置决定</p>
+<h4 id="前后端分离"><a href="#前后端分离" class="headerlink" title="前后端分离"></a>前后端分离</h4><p>原理：前端JS框架，API传输数据</p>
+<p>理解：前端一个页面，后端一个页面，一般页面十分简洁美化没有那么多的分类</p>
+<p>一般没分离的可以&#x2F;admin之类的访问  </p>
+<p>影响：</p>
+<p>1、前端页面大部分不存在漏洞</p>
+<p>2、后端管理大部分不在同域名</p>
+<p>3、获得权限有可能不影响后端（是否同域，子域名）</p>
+<h4 id="软件搭建：宝塔或Phpstudy"><a href="#软件搭建：宝塔或Phpstudy" class="headerlink" title="软件搭建：宝塔或Phpstudy"></a>软件搭建：宝塔或Phpstudy</h4><p>原理：打包类集成化环境，权限配置或受控制</p>
+<p>影响：攻击者权限对比区别</p>
+<p>宝塔：攻击者上传连接后，文件被锁定目录，命令无法执行</p>
+<p>自己搭建的IIS：部分可看部分可执行 iis apppool\defaultapppool</p>
+<p>Phpstudy（创建时安全可设置，默认全关）：文件目录可看，命令可执行 whomi 获取用户权限—administrator </p>
+<h4 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h4><p>原理：虚拟化技术独立磁盘空间，非真实物理环境</p>
+<p>影响：攻击者虚拟空间磁盘</p>
+<p>判断是否分配给用户使用</p>
+<p>虚构一个了一个假象给你，目录不一致 </p>
+<p>你就像docker容器搭建的网站，当我好不容易得到你的芳心（权限），想再靠近你，触摸你，可是举目四望，一切竟只是假象。</p>
+<h4 id="建站分配站"><a href="#建站分配站" class="headerlink" title="建站分配站"></a>建站分配站</h4><p>1.托管 拥有版权</p>
+<p>2.申请 没有版权</p>
+<p>原理：利用别人域名模版建立</p>
+<p>影响：实质安全测试非目标资产</p>
+<p>你测试对象实际是平台不是用户</p>
+<h4 id="静态网站"><a href="#静态网站" class="headerlink" title="静态网站"></a>静态网站</h4><p>例子：大学学的html设计的网站</p>
+<p>原理：数据没有传输性（js传输不算）</p>
+<p>影响：无漏洞</p>
+<p>伪静态网站：</p>
+<p>动态转为静态技术，伪装的静态</p>
+<p>动态网站：</p>
+<p>内容动态生成，用户交互，实时更新</p>
+<h4 id="WAF（防火墙防护）"><a href="#WAF（防火墙防护）" class="headerlink" title="WAF（防火墙防护）"></a>WAF（防火墙防护）</h4><p>原理：Web应用防火墙，旨在提供保护</p>
+<p>影响：常规Web安全测试手段会受到拦截</p>
+<p>演示：免费D盾防护软件</p>
+<p>Windows2012 + IIS +D盾</p>
+<h4 id="CDN（内容分发网络）"><a href="#CDN（内容分发网络）" class="headerlink" title="CDN（内容分发网络）"></a>CDN（内容分发网络）</h4><p>原理：内容分发服务，旨在提高访问速度</p>
+<p>影响：隐藏真实源IP，导致对目标测试错误</p>
+<p>演示：阿里云备案域名全局CDN加速服务</p>
+<p>Windows2012 + BT宝塔面板 + CDN服务</p>
+<p>超级ping网站：<a target="_blank" rel="noopener" href="https://ping.chinaz.com来判断是否使用了cdn/">https://ping.chinaz.com来判断是否使用了CDN</a></p>
+<h4 id="OSS（云存储）"><a href="#OSS（云存储）" class="headerlink" title="OSS（云存储）"></a>OSS（云存储）</h4><p>原理：云存储服务，旨在提高访问速度</p>
+<p>影响：</p>
+<p>演示：<a target="_blank" rel="noopener" href="https://cloudreve.org/">https://cloudreve.org/</a></p>
+<p>Windows2012 + cloudreve + 阿里云OSS</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cloudreve/Cloudreve/releases/tag/3.7.1">https://github.com/cloudreve/Cloudreve/releases/tag/3.7.1</a></p>
+<p>1、启动应用</p>
+<p>2、登录管理</p>
+<p>3、配置存储信息</p>
+<p>4、更改用户组存储属性</p>
+<p>阿里云OSS:</p>
+<p>1、开通OSS</p>
+<p>2、新建Bucket</p>
+<p>3、配置Bucket属性</p>
+<p>4、配置Access访问</p>
+<p>原理：</p>
+<p>为什么要使用第三方存储？</p>
+<p>1）静态文件会占用大量带宽</p>
+<p>2）加载速度</p>
+<p>3）存储空间</p>
+<p>影响：</p>
+<p>上传的文件或解析的文件均来自于OSS资源，无法解析，单独存储</p>
+<p>1、修复上传安全,上传了，但传到了另一个无法解析的地方</p>
+<p>2、文件解析不一样</p>
+<p>3、但Accesskey隐患，如果我能获得OSS的密码</p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>正向代理为客户端服务,客户端主动建立代理访问目标（不代理不可达）</p>
+<p>所以正向没有影响</p>
+<p>反向代理为服务端服务,服务端主动转发数据给可访问地址（不主动不可达）</p>
+<p>原理：通过网络反向代理转发真实服务达到访问目的</p>
+<p>影响：访问目标只是一个代理，非真实应用服务器</p>
+<p>注意：正向代理和反向代理都是解决访问不可达的问题，但由于反向代理中多出一个可以重定向解析的功能操作，导致反代理出的站点指向和真实应用毫无关系！</p>
+<p>讲个笑话，你打开了竟然是百度？你让我去打百度？？？（忽悠我）</p>
+<p>来个目录后缀又TM跳去了b站</p>
+<p>演示：Nginx反向代理配置</p>
+<p>Windows2012 + BT宝塔面板 + Nginx</p>
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>原理：分摊到多个操作单元上进行执行，共同完成工作任务</p>
+<p>影响：有多个服务器加载服务，测试过程中存在多个目标情况</p>
+<p>演示：Nginx负载均衡配置</p>
+<p>Windows2012 + BT宝塔面板 + Nginx</p>
+<p>#定义负载设置</p>
+<p>upstream fzjh{</p>
+<p>​    server 47.94.236.117:80 weight&#x3D;2; #权重更高，优先级更高，打开概率更高</p>
+<p>​    server 47.122.22.195:80 weight&#x3D;1;</p>
+<p>} #用这两个网站提供服务</p>
+<p>#定义访问路径 访问策略</p>
+<p>location &#x2F; {</p>
+<p>  proxy_pass <a target="_blank" rel="noopener" href="http://fzjh/">http://fzjh/</a>;</p>
+<p>}#访问这个根目录时启动负载均衡</p>
+<p>思考：</p>
+<p>0、知道Web必备四大件作用</p>
+<p>1、知道网站有哪些形式展示</p>
+<p>2、知道源码和URL访问对应关系</p>
+<p>3、知道源码有加密开源闭源类型</p>
+<p>4、知道文件访问解析由什么决定</p>
+<p>5、知道数据库存储数据站库分离</p>
+<p>6、知道中间件配置影响后续手法</p>
+<p>7、知道常规真实Web搭建解析流程</p>
+<p>8、思考为什么要学习掌握这些东西</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://WH-dragon.github.io">WH-dragon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://wh-dragon.github.io/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-Web%E6%9E%B6%E6%9E%84/">http://wh-dragon.github.io/2024/09/27/入门基础-Web架构/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://WH-dragon.github.io" target="_blank">WH-dragon的荒岛</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%A4%B4%E5%83%8F.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-APP%E4%B8%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84/" title="网安入门-APP与小程序架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">网安入门-APP与小程序架构</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="我的第一篇博客"><img class="cover" src="/img/%E5%A4%B4%E9%83%A8%E5%9B%BE.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">我的第一篇博客</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/27/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-APP%E4%B8%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84/" title="网安入门-APP与小程序架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-27</div><div class="title">网安入门-APP与小程序架构</div></div></a></div><div><a href="/2024/09/28/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%BC%B9%20SHELL&%E4%B8%8D%E5%9B%9E%E6%98%BE%E5%B8%A6%E5%A4%96&%E6%AD%A3%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5&%E9%98%B2%E7%81%AB%E5%A2%99%E5%87%BA%E5%85%A5%E7%AB%99&%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" title="网安入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-28</div><div class="title">网安入门-反弹 SHELL&amp;不回显带外&amp;正反向连接&amp;防火墙出入站&amp;文件下载</div></div></a></div><div><a href="/2024/10/14/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&%E5%85%B6%E5%AE%83%E5%8D%8F%E8%AE%AE/" title="网安入门-抓包技术&amp;其它协议"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-14</div><div class="title">网安入门-抓包技术&amp;其它协议</div></div></a></div><div><a href="/2024/10/11/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E6%8A%93%E5%8C%85%E6%8A%80%E6%9C%AF&HTTPS/" title="网安入门-抓包技术&amp;HTTPS"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-11</div><div class="title">网安入门-抓包技术&amp;HTTPS</div></div></a></div><div><a href="/2024/10/14/%E6%9F%90%E6%AC%A1%E6%AF%94%E8%B5%9B%E8%8D%89%E7%8E%87%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="某次比赛草率的学习笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-14</div><div class="title">某次比赛草率的学习笔记</div></div></a></div><div><a href="/2024/10/16/%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90&%E4%BC%A0%E8%BE%93%E5%8A%A0%E5%AF%86&%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F&%E5%AF%86%E6%96%87%E5%AD%98%E5%82%A8&%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86&%E9%80%86%E5%90%91%E4%BF%9D%E6%8A%A4/" title="网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-16</div><div class="title">网安入门-算法分析&amp;传输加密&amp;数据格式&amp;密文存储&amp;代码混淆&amp;逆向保护</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web%E6%9E%B6%E6%9E%84"><span class="toc-text">Web架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E5%B8%B8%E8%A7%81%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F"><span class="toc-text">网站常见搭建模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Web%E7%A8%8B%E5%BA%8F%E6%BA%90%E7%A0%81%E5%88%86%E7%B1%BB%E4%B8%8E%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-text">Web程序源码分类与结构：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="toc-text">对中间件的配置：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AB%99%E5%BA%93%E5%88%86%E7%A6%BB"><span class="toc-text">站库分离</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E8%AE%BF%E9%97%AE%E5%92%8C%E8%B7%AF%E7%94%B1%E8%AE%BF%E9%97%AE"><span class="toc-text">常规访问和路由访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB"><span class="toc-text">前后端分离</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%90%AD%E5%BB%BA%EF%BC%9A%E5%AE%9D%E5%A1%94%E6%88%96Phpstudy"><span class="toc-text">软件搭建：宝塔或Phpstudy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Docker%E5%AE%B9%E5%99%A8"><span class="toc-text">Docker容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E7%AB%99%E5%88%86%E9%85%8D%E7%AB%99"><span class="toc-text">建站分配站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99"><span class="toc-text">静态网站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WAF%EF%BC%88%E9%98%B2%E7%81%AB%E5%A2%99%E9%98%B2%E6%8A%A4%EF%BC%89"><span class="toc-text">WAF（防火墙防护）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CDN%EF%BC%88%E5%86%85%E5%AE%B9%E5%88%86%E5%8F%91%E7%BD%91%E7%BB%9C%EF%BC%89"><span class="toc-text">CDN（内容分发网络）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OSS%EF%BC%88%E4%BA%91%E5%AD%98%E5%82%A8%EF%BC%89"><span class="toc-text">OSS（云存储）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-text">负载均衡</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By WH-dragon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi! Welcome TO My Blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script></div></body></html>
